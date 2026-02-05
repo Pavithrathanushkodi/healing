@@ -76,7 +76,7 @@ export const SERVICES: Service[] = [
     },
     price: 1600,
     duration: "1.30 Hours",
-    imageUrl: "https://images.unsplash.com/photo-1544161515-4af6b1d40af1?q=80&w=1000&auto=format&fit=crop",
+    imageUrl: "/images/vali nivaranam.jpg",
     category: "massage",
     addOns: [{ name: { en: "Head Massage (Mudiyor Koonthal Oil)", ta: "தலை மசாஜ் (முதியோர் கூந்தல் எண்ணெய்)" }, price: 200 }]
   },
@@ -251,7 +251,7 @@ export const SERVICES: Service[] = [
     name: { en: "Relaxation Combo", ta: "ரிலாக்சேஷன் காம்போ" },
     description: { en: "Oil Massage + Shirodhara + Foot Reflexology.", ta: "எண்ணெய் மசாஜ் + சிரோதாரா + பாத ரிஃப்ளெக்சாலஜி." },
     price: 2800,
-    imageUrl: "https://images.unsplash.com/photo-1600334129128-685c5582fd35?q=80&w=1000&auto=format&fit=crop",
+    imageUrl: "/images/combo1.png",
     category: "combo",
   },
   {
@@ -259,7 +259,7 @@ export const SERVICES: Service[] = [
     name: { en: "Advanced Healing Combo", ta: "மேம்பட்ட ஹீலிங் காம்போ" },
     description: { en: "Oil Massage, Shirodhara, Foot Reflexology, Thai Massage & Chiropractic.", ta: "முழு உடல் மசாஜ், சிரோதாரா, பாத ரிஃப்ளெக்சாலஜி, தாய் மசாஜ் & கைரோபிராக்டிக்." },
     price: 3800,
-    imageUrl: "https://images.unsplash.com/photo-1519823551278-64ac92734fb1?q=80&w=1000&auto=format&fit=crop",
+    imageUrl: "/images/combo2.png",
     category: "combo",
   }
 ];
