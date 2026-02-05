@@ -171,17 +171,17 @@ export const SERVICES: Service[] = [
     imageUrl: "/images/varma thokkanam.png",
     category: "treatment"
   },
-  {
-    id: "kizhi-therapy",
-    name: { en: "Kizhi Therapy", ta: "கிழி சிகிச்சை" },
-    description: {
-      en: "Traditional herbal bundle fomentation (Othadam) for pain and stiffness.",
-      ta: "சூடான மூலிகை பொட்டலங்களால் செய்யப்படும் பாரம்பரிய ஒத்தடம் சிகிச்சை."
-    },
-    price: 66,
-    imageUrl: "/images/kizhli.jpg",
-    category: "treatment"
+{
+  id: "kizhi-therapy",
+  name: { en: "Kizhi Therapy", ta: "கிழி சிகிச்சை" },
+  description: {
+    en: "Kizhi therapy is a traditional othadam (herbal fomentation) treatment done using warm herbal bundles. It includes three types: Podi/Thool Kizhi for pain and stiffness, Navara Kizhi for strength and nourishment, and Herbal (Mooligai) Kizhi to reduce inflammation and body pain.",
+    ta: "கிழி சிகிச்சை என்பது சூடான மூலிகை பொட்டலங்களால் செய்யப்படும் பாரம்பரிய ஒத்தடம் சிகிச்சையாகும். இதில் மூன்று வகைகள் உள்ளன: பொடி/தூள் கிழி – வலி மற்றும் இறுக்கம் குறைக்க, நவர கிழி – உடல் வலிமை மற்றும் ஊட்டம் அளிக்க, மூலிகை கிழி – அழற்சி மற்றும் உடல் வலியை குறைக்க."
   },
+  price: 66,
+  imageUrl: "/images/kizhli.jpg",
+  category: "treatment"
+},
   {
     id: "nethra-tharpanam",
     name: { en: "Nethra Tharpanam", ta: "நேத்ர தர்ப்பணம்" },
@@ -264,8 +264,9 @@ export const SERVICES: Service[] = [
     ta: "முழு உடல் மசாஜ், சிரோதாரா, பாத ரிஃப்ளெக்சாலஜி, தாய் மசாஜ், கைரோபிராக்டிக் & நேத்ர தர்ப்பணம்."
   },
   price: 3800,
-  imageUrl: "/images/combo 2.png",
+  imageUrl: "/images/combo2.png",
   category: "combo",
   
 }
+
 ];
