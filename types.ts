@@ -29,6 +29,7 @@ export interface CartItem {
 
 export interface AppointmentDetails {
   name: string;
+  phone: string;
   place: string;
   date: string;
   time: string;

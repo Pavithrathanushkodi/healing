@@ -1,30 +1,38 @@
 
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import ServiceCard from './components/ServiceCard';
 import Cart from './components/Cart';
 import AppointmentForm from './components/AppointmentForm';
 import Footer from './components/Footer';
+import WelcomePopup from './components/WelcomePopup';
 import { SERVICES, WHATSAPP_NUMBER, UI_STRINGS } from './constants';
 import { CartItem, Service, AppointmentDetails, Language } from './types';
 
 const App: React.FC = () => {
-  const [language, setLanguage] = useState<Language>('ta');
+  // Website starts in English as requested
+  const [language, setLanguage] = useState<Language>('en');
   const [cart, setCart] = useState<CartItem[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [currentView, setCurrentView] = useState<'home' | 'form'>('home');
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
+  const [showWelcomePopup, setShowWelcomePopup] = useState(true);
 
   const toggleLanguage = () => {
     setLanguage(prev => prev === 'en' ? 'ta' : 'en');
+  };
+
+  const handlePopupChoice = (lang: Language) => {
+    setLanguage(lang);
+    setShowWelcomePopup(false);
   };
 
   const t = (key: string) => UI_STRINGS[key]?.[language] || key;
 
   const addToCart = useCallback((service: Service, withAddon: boolean) => {
     setCart(prev => {
-      // Allow multiple services but prevent duplicate identical service IDs
+      // Prevent duplicates in cart
       if (prev.some(item => item.service.id === service.id)) return prev;
       return [...prev, { service, withAddon }];
     });
@@ -47,42 +55,40 @@ const App: React.FC = () => {
       if (item.withAddon && item.service.addOns) {
         name += ` (+ ${item.service.addOns[0].name[language]})`;
       }
-      return `- ${name} (₹${item.service.price + (item.withAddon && item.service.addOns ? item.service.addOns[0].price : 0)})`;
+      return `• ${name}`;
     }).join('\n');
 
     const total = cart.reduce((acc, item) => acc + item.service.price + (item.withAddon && item.service.addOns ? item.service.addOns[0].price : 0), 0);
+    const cleanPhone = details.phone.replace(/[^0-9]/g, '');
+    const clientPhoneFormatted = cleanPhone.startsWith('91') ? cleanPhone : `91${cleanPhone}`;
 
-    const message = language === 'ta' 
-      ? `வணக்கம் Healing Care,
+    // Constructing specific response messages for the owner to send to the client
+    const acceptText = encodeURIComponent(`Hi ${details.name}, your appointment at Healing Care for ${details.date} at ${details.time} is ACCEPTED. See you soon!`);
+    const changeText = encodeURIComponent(`Hi ${details.name}, regarding your Healing Care appointment, I would like to suggest a different time. Please let me know when you are available.`);
 
-எனது முன்பதிவு விவரங்கள்:
-------------------------
-பெயர்: ${details.name}
-இடம்: ${details.place}
-தேதி: ${details.date}
-நேரம்: ${details.time}
+    const message = `🌟 *NEW APPOINTMENT - HEALING CARE* 🌟
+-----------------------------------
+👤 *Name:* ${details.name}
+📍 *Place:* ${details.place}
+📞 *Phone:* ${details.phone}
+📅 *Date:* ${details.date}
+⏰ *Time:* ${details.time}
 
-தேர்ந்தெடுக்கப்பட்ட சேவைகள்:
+🛠 *Services:*
 ${serviceList}
 
-மொத்த தொகை: ₹${total}
+💰 *Total Amount:* ₹${total}
+-----------------------------------
+🚀 *QUICK ACTIONS (CLICK BELOW):*
 
-தயவுசெய்து எனது முன்பதிவை உறுதிப்படுத்தவும்.`
-      : `Hi Healing Care,
+✅ *1. ACCEPT BOOKING:*
+https://wa.me/${clientPhoneFormatted}?text=${acceptText}
 
-My Appointment Details:
-------------------------
-Name: ${details.name}
-Place: ${details.place}
-Date: ${details.date}
-Time: ${details.time}
+🕒 *2. CHANGE TIME:*
+https://wa.me/${clientPhoneFormatted}?text=${changeText}
 
-Selected Services:
-${serviceList}
-
-Total Amount: ₹${total}
-
-Please confirm my booking.`;
+📞 *3. CALL CLIENT:*
+tel:${details.phone}`;
 
     const encodedMessage = encodeURIComponent(message);
     window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`, '_blank');
@@ -102,6 +108,8 @@ Please confirm my booking.`;
 
   return (
     <div className="min-h-screen flex flex-col selection:bg-emerald-100 selection:text-emerald-900">
+      {showWelcomePopup && <WelcomePopup onChoose={handlePopupChoice} />}
+      
       <Navbar 
         cartCount={cart.length} 
         language={language}
@@ -177,7 +185,7 @@ Please confirm my booking.`;
         href={`https://wa.me/${WHATSAPP_NUMBER}`}
         target="_blank"
         rel="noopener noreferrer"
-        className="fixed bottom-6 left-6 z-50 bg-[#25D366] text-white p-4 rounded-full shadow-2xl hover:scale-110 active:scale-95 transition-all flex items-center justify-center"
+        className="fixed bottom-6 right-6 z-50 bg-[#25D366] text-white p-4 rounded-full shadow-2xl hover:scale-110 active:scale-95 transition-all flex items-center justify-center"
       >
         <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor">
           <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.067 2.875 1.215 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />

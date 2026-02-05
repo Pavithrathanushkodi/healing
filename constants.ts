@@ -3,8 +3,8 @@ import { Service, Translation } from './types';
 
 export const WHATSAPP_NUMBER = "8190942026";
 export const INSTAGRAM_URL = "https://www.instagram.com/call____me____yaro?igsh=Zm9mbTk2dHFndDJz";
-export const LOCATION_NAME_EN = "Tenkasi, Tamil Nadu";
-export const LOCATION_NAME_TA = "தென்காசி, தமிழ்நாடு";
+export const LOCATION_NAME_EN = "Tenkasi Post Office, Tamil Nadu";
+export const LOCATION_NAME_TA = "தென்காசி போஸ்ட் ஆபீஸ், தமிழ்நாடு";
 export const TIMING_EN = "Mon - Sun: 9:00 AM - 10:00 PM";
 export const TIMING_TA = "திங்கள் - ஞாயிறு: காலை 9:00 - இரவு 10:00";
 
@@ -34,6 +34,7 @@ export const UI_STRINGS: Translation = {
   checkout: { en: "Proceed to Appointment", ta: "முன்பதிவு செய்ய" },
   total: { en: "Total Amount", ta: "மொத்த தொகை" },
   name_label: { en: "Your Name", ta: "உங்கள் பெயர்" },
+  phone_label: { en: "Phone Number", ta: "தொலைபேசி எண்" },
   place_label: { en: "Your Place", ta: "இடம் / ஊர்" },
   date_label: { en: "Date", ta: "தேதி" },
   time_label: { en: "Time", ta: "நேரம்" },
@@ -75,7 +76,7 @@ export const SERVICES: Service[] = [
     },
     price: 1600,
     duration: "1.30 Hours",
-    imageUrl: "https://images.unsplash.com/photo-1519823551278-64ac92734fb1?q=80&w=1000&auto=format&fit=crop",
+    imageUrl: "https://images.unsplash.com/photo-1544161515-4af6b1d40af1?q=80&w=1000&auto=format&fit=crop",
     category: "massage",
     addOns: [{ name: { en: "Head Massage (Mudiyor Koonthal Oil)", ta: "தலை மசாஜ் (முதியோர் கூந்தல் எண்ணெய்)" }, price: 200 }]
   },
@@ -171,17 +172,17 @@ export const SERVICES: Service[] = [
     imageUrl: "/images/varma thokkanam.png",
     category: "treatment"
   },
-{
-  id: "kizhi-therapy",
-  name: { en: "Kizhi Therapy", ta: "கிழி சிகிச்சை" },
-  description: {
-    en: "Kizhi therapy is a traditional othadam (herbal fomentation) treatment done using warm herbal bundles. It includes three types: Podi/Thool Kizhi for pain and stiffness, Navara Kizhi for strength and nourishment, and Herbal (Mooligai) Kizhi to reduce inflammation and body pain.",
-    ta: "கிழி சிகிச்சை என்பது சூடான மூலிகை பொட்டலங்களால் செய்யப்படும் பாரம்பரிய ஒத்தடம் சிகிச்சையாகும். இதில் மூன்று வகைகள் உள்ளன: பொடி/தூள் கிழி – வலி மற்றும் இறுக்கம் குறைக்க, நவர கிழி – உடல் வலிமை மற்றும் ஊட்டம் அளிக்க, மூலிகை கிழி – அழற்சி மற்றும் உடல் வலியை குறைக்க."
+  {
+    id: "kizhi-therapy",
+    name: { en: "Kizhi Therapy", ta: "கிழி சிகிச்சை" },
+    description: {
+      en: "Traditional herbal bundle fomentation (Othadam) for pain and stiffness.",
+      ta: "சூடான மூலிகை பொட்டலங்களால் செய்யப்படும் பாரம்பரிய ஒத்தடம் சிகிச்சை."
+    },
+    price: 66,
+    imageUrl: "/images/kizhli.jpg",
+    category: "treatment"
   },
-  price: 66,
-  imageUrl: "/images/kizhli.jpg",
-  category: "treatment"
-},
   {
     id: "nethra-tharpanam",
     name: { en: "Nethra Tharpanam", ta: "நேத்ர தர்ப்பணம்" },
@@ -198,7 +199,7 @@ export const SERVICES: Service[] = [
     name: { en: "Janu Basti", ta: "ஜாணு பஸ்தி" },
     description: { 
       en: "Ayurvedic treatment for knee osteoarthritis and joint health.", 
-      ta: "முட்டு வலி மற்றும் மூட்டு ஆரோக்கியத்திற்கான ஆயுர்வேத சிகிச்சை."
+      ta: "முட்டு வலி 및 மூட்டு ஆரோக்கியத்திற்கான ஆயுர்வேத சிகிச்சை."
     },
     price: 500,
     imageUrl: "/images/janu-basti-treatment.png",
@@ -250,23 +251,15 @@ export const SERVICES: Service[] = [
     name: { en: "Relaxation Combo", ta: "ரிலாக்சேஷன் காம்போ" },
     description: { en: "Oil Massage + Shirodhara + Foot Reflexology.", ta: "எண்ணெய் மசாஜ் + சிரோதாரா + பாத ரிஃப்ளெக்சாலஜி." },
     price: 2800,
-    imageUrl: "/images/combo 1.png",
+    imageUrl: "https://images.unsplash.com/photo-1600334129128-685c5582fd35?q=80&w=1000&auto=format&fit=crop",
     category: "combo",
   },
   {
-  id: "combo-3800",
-  name: {
-    en: "Advanced Healing Combo",
-    ta: "மேம்பட்ட ஹீலிங் காம்போ"
-  },
-  description: {
-    en: "Full Body Oil Massage, Shirodhara, Foot Reflexology, Thai Massage, Chiropractic & Nethra Tharpanam.",
-    ta: "முழு உடல் மசாஜ், சிரோதாரா, பாத ரிஃப்ளெக்சாலஜி, தாய் மசாஜ், கைரோபிராக்டிக் & நேத்ர தர்ப்பணம்."
-  },
-  price: 3800,
-  imageUrl: "/images/combo2.png",
-  category: "combo",
-  
-}
-
+    id: "combo-3800",
+    name: { en: "Advanced Healing Combo", ta: "மேம்பட்ட ஹீலிங் காம்போ" },
+    description: { en: "Oil Massage, Shirodhara, Foot Reflexology, Thai Massage & Chiropractic.", ta: "முழு உடல் மசாஜ், சிரோதாரா, பாத ரிஃப்ளெக்சாலஜி, தாய் மசாஜ் & கைரோபிராக்டிக்." },
+    price: 3800,
+    imageUrl: "https://images.unsplash.com/photo-1519823551278-64ac92734fb1?q=80&w=1000&auto=format&fit=crop",
+    category: "combo",
+  }
 ];
