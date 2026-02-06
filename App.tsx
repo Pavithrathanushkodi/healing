@@ -11,7 +11,6 @@ import { SERVICES, WHATSAPP_NUMBER, UI_STRINGS } from './constants';
 import { CartItem, Service, AppointmentDetails, Language } from './types';
 
 const App: React.FC = () => {
-  // Website starts in English as requested
   const [language, setLanguage] = useState<Language>('en');
   const [cart, setCart] = useState<CartItem[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
@@ -32,7 +31,6 @@ const App: React.FC = () => {
 
   const addToCart = useCallback((service: Service, withAddon: boolean) => {
     setCart(prev => {
-      // Prevent duplicates in cart
       if (prev.some(item => item.service.id === service.id)) return prev;
       return [...prev, { service, withAddon }];
     });
@@ -50,6 +48,11 @@ const App: React.FC = () => {
   };
 
   const handleFinalSubmit = (details: AppointmentDetails) => {
+    if (cart.length === 0) {
+      alert("Cart is empty");
+      return;
+    }
+
     const serviceList = cart.map(item => {
       let name = item.service.name[language];
       if (item.withAddon && item.service.addOns) {
@@ -59,12 +62,14 @@ const App: React.FC = () => {
     }).join('\n');
 
     const total = cart.reduce((acc, item) => acc + item.service.price + (item.withAddon && item.service.addOns ? item.service.addOns[0].price : 0), 0);
+    
+    // Clean client phone number for owner action links
     const cleanPhone = details.phone.replace(/[^0-9]/g, '');
     const clientPhoneFormatted = cleanPhone.startsWith('91') ? cleanPhone : `91${cleanPhone}`;
 
-    // Constructing specific response messages for the owner to send to the client
-    const acceptText = encodeURIComponent(`Hi ${details.name}, your appointment at Healing Care for ${details.date} at ${details.time} is ACCEPTED. See you soon!`);
-    const changeText = encodeURIComponent(`Hi ${details.name}, regarding your Healing Care appointment, I would like to suggest a different time. Please let me know when you are available.`);
+    // Response messages for you (the owner) to send back to the client
+    const acceptText = encodeURIComponent(`Hi ${details.name}, your Healing Care appointment for ${details.date} at ${details.time} is ACCEPTED ✅. See you soon!`);
+    const changeText = encodeURIComponent(`Hi ${details.name}, regarding your appointment, I'd like to suggest a different time or date. When are you free? 🕒`);
 
     const message = `🌟 *NEW APPOINTMENT - HEALING CARE* 🌟
 -----------------------------------
@@ -79,19 +84,33 @@ ${serviceList}
 
 💰 *Total Amount:* ₹${total}
 -----------------------------------
-🚀 *QUICK ACTIONS (CLICK BELOW):*
+🚀 *ACTION BUTTONS:*
 
-✅ *1. ACCEPT BOOKING:*
+✅ *1. ACCEPT (Send Acceptance Message):*
 https://wa.me/${clientPhoneFormatted}?text=${acceptText}
 
-🕒 *2. CHANGE TIME:*
+🕒 *2. CHANGE (Suggest New Time):*
 https://wa.me/${clientPhoneFormatted}?text=${changeText}
 
-📞 *3. CALL CLIENT:*
+📞 *3. CALL (Click to Dial):*
 tel:${details.phone}`;
 
     const encodedMessage = encodeURIComponent(message);
-    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`, '_blank');
+    const finalUrl = `https://api.whatsapp.com/send?phone=${WHATSAPP_NUMBER}&text=${encodedMessage}`;
+    
+    // Robust redirection method: simulates a link click to bypass mobile browser restrictions
+    try {
+      const link = document.createElement('a');
+      link.href = finalUrl;
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } catch (error) {
+      console.error("WhatsApp redirect failed", error);
+      window.location.href = finalUrl; // Fallback
+    }
   };
 
   const categories = [

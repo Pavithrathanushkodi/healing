@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { AppointmentDetails, Language } from '../types';
-import { Calendar, User, MapPin, Clock, ArrowLeft } from 'lucide-react';
+import { Calendar, User, MapPin, Clock, ArrowLeft, Phone } from 'lucide-react';
 import { UI_STRINGS } from '../constants';
 
 interface AppointmentFormProps {
@@ -14,6 +14,7 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({ onSubmit, onBack, lan
   const t = (key: string) => UI_STRINGS[key]?.[language] || key;
   const [formData, setFormData] = React.useState<AppointmentDetails>({
     name: '',
+    phone: '',
     place: '',
     date: '',
     time: ''
@@ -21,7 +22,7 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({ onSubmit, onBack, lan
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.name || !formData.place || !formData.date || !formData.time) {
+    if (!formData.name || !formData.phone || !formData.place || !formData.date || !formData.time) {
       alert(language === 'ta' ? "தயவுசெய்து அனைத்து விவரங்களையும் நிரப்பவும்" : "Please fill all details");
       return;
     }
@@ -57,6 +58,21 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({ onSubmit, onBack, lan
               className="w-full px-4 py-3 bg-stone-50 border border-stone-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all"
               value={formData.name}
               onChange={(e) => setFormData({...formData, name: e.target.value})}
+            />
+          </div>
+
+          <div className="space-y-1.5">
+            <label className="text-sm font-bold text-stone-700 flex items-center gap-2">
+              <Phone size={16} className="text-emerald-600" />
+              {t('phone_label')}
+            </label>
+            <input 
+              type="tel" 
+              required
+              placeholder={language === 'ta' ? 'தொலைபேசி எண்' : 'Mobile Number'}
+              className="w-full px-4 py-3 bg-stone-50 border border-stone-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all"
+              value={formData.phone}
+              onChange={(e) => setFormData({...formData, phone: e.target.value})}
             />
           </div>
 
